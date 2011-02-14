@@ -4,42 +4,43 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{jakewendt-simply_testable}
-  s.version = "1.6.0"
+  s.name = %q{jakewendt-rails_extension}
+  s.version = "2.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jake"]
-  s.date = %q{2011-02-10}
-  s.description = %q{longer description of your gem}
-  s.email = %q{github@jake.otherinbox.com}
+  s.date = %q{2011-02-14}
+  s.description = %q{Collection of validations and complex assertions}
+  s.email = %q{github@jakewendt.com}
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc"
   ]
   s.files = [
-    "generators/simply_testable/USAGE",
-    "generators/simply_testable/simply_testable_generator.rb",
-    "lib/jakewendt-simply_testable.rb",
-    "lib/simply_testable.rb",
-    "lib/simply_testable/action_controller_extension.rb",
-    "lib/simply_testable/action_controller_extension/accessible_via_format.rb",
-    "lib/simply_testable/action_controller_extension/accessible_via_protocol.rb",
-    "lib/simply_testable/action_controller_extension/accessible_via_user.rb",
-    "lib/simply_testable/action_controller_extension/routing.rb",
-    "lib/simply_testable/action_controller_extension/test_case.rb",
-    "lib/simply_testable/acts_as_list.rb",
-    "lib/simply_testable/assertions.rb",
-    "lib/simply_testable/associations.rb",
-    "lib/simply_testable/attributes.rb",
-    "lib/simply_testable/declarative.rb",
-    "lib/simply_testable/errors.rb",
-    "lib/simply_testable/pending.rb",
-    "lib/simply_testable/test_case.rb"
+    "generators/rails_extension/USAGE",
+    "generators/rails_extension/rails_extension_generator.rb",
+    "lib/jakewendt-rails_extension.rb",
+    "lib/rails_extension.rb",
+    "lib/rails_extension/action_controller_extension.rb",
+    "lib/rails_extension/action_controller_extension/accessible_via_format.rb",
+    "lib/rails_extension/action_controller_extension/accessible_via_protocol.rb",
+    "lib/rails_extension/action_controller_extension/accessible_via_user.rb",
+    "lib/rails_extension/action_controller_extension/routing.rb",
+    "lib/rails_extension/action_controller_extension/test_case.rb",
+    "lib/rails_extension/active_record_extension.rb",
+    "lib/rails_extension/active_record_extension/base.rb",
+    "lib/rails_extension/active_record_extension/error.rb",
+    "lib/rails_extension/active_record_extension/errors.rb",
+    "lib/rails_extension/active_support_extension.rb",
+    "lib/rails_extension/active_support_extension/associations.rb",
+    "lib/rails_extension/active_support_extension/attributes.rb",
+    "lib/rails_extension/active_support_extension/pending.rb",
+    "lib/rails_extension/active_support_extension/test_case.rb"
   ]
-  s.homepage = %q{http://github.com/jakewendt/simply_testable}
+  s.homepage = %q{http://github.com/jakewendt/rails_extension}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.0}
-  s.summary = %q{one-line summary of your gem}
+  s.rubygems_version = %q{1.5.2}
+  s.summary = %q{Validations and assertions}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

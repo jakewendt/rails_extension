@@ -1,5 +1,4 @@
-module SimplyTestable::ActionControllerExtension
-module TestCase
+module RailsExtension::ActionControllerExtension::TestCase
 
 	def turn_https_on
 		@request.env['HTTPS'] = 'on'
@@ -15,9 +14,6 @@ module TestCase
 		assert_equal layout, @response.layout
 	end
 
-end	#	module TestCase
-end	#	module SimplyTestable::ActionControllerExtension
-require 'action_controller'
-require 'action_controller/test_case'
+end	#	module RailsExtension::ActionControllerExtension::TestCase
 ActionController::TestCase.send(:include,
-	SimplyTestable::ActionControllerExtension::TestCase)
+	RailsExtension::ActionControllerExtension::TestCase)

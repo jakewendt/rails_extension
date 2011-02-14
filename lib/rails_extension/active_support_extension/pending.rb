@@ -1,7 +1,7 @@
 # Some code from jeremymcanally's "pending"
 # http://github.com/jeremymcanally/pending/tree/master
 
-module SimplyTestable::ActiveSupportExtension::Pending
+module RailsExtension::ActiveSupportExtension::Pending
 	unless defined?(Spec)
 
 		@@pending_cases = []
@@ -63,6 +63,5 @@ module SimplyTestable::ActiveSupportExtension::Pending
 		end
 	end
 end
-#require 'active_support/test_case'
 ActiveSupport::TestCase.send(:include, 
-	SimplyTestable::ActiveSupportExtension::Pending)
+	RailsExtension::ActiveSupportExtension::Pending)

@@ -1,4 +1,4 @@
-class SimplyTestableGenerator < Rails::Generator::Base
+class RailsExtensionGenerator < Rails::Generator::Base
 
 	def manifest
 		#	See Rails::Generator::Commands::Create

@@ -1,7 +1,7 @@
 def brand
 	"@@ "
 end
-module SimplyTestable
+module RailsExtension
 #	predefine namespaces
 module ActiveSupportExtension
 end
@@ -13,6 +13,6 @@ end
 #
 #	This may require the addition of other gem requirements
 #
-require 'simply_testable/active_support_extension'
-require 'simply_testable/active_record_extension'
-require 'simply_testable/action_controller_extension'
+require 'rails_extension/active_support_extension'
+require 'rails_extension/active_record_extension'
+require 'rails_extension/action_controller_extension'

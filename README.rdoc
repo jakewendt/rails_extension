@@ -1,13 +1,13 @@
-= Simply Testable (RubyGem)
+= Rails Extension (RubyGem)
 
 Contains a collection of validations and complex assertions.
 
 == Usage
 
- config.gem 'jakewendt-simply_testable',
+ config.gem 'jakewendt-rails_extension',
    :source => 'http://rubygems.org'
 
- script/generate simply_testable
+ script/generate rails_extension
 
 == ToDo
 

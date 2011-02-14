@@ -1,4 +1,4 @@
-module SimplyTestable::ActiveRecordExtension::Error
+module RailsExtension::ActiveRecordExtension::Error
 	def self.included(base)
 		base.class_eval do
 			alias_method_chain :generate_full_message, :attribute_strip unless
@@ -20,4 +20,4 @@ module SimplyTestable::ActiveRecordExtension::Error
 	end
 end
 ActiveRecord::Error.send(:include,
-	SimplyTestable::ActiveRecordExtension::Error)
+	RailsExtension::ActiveRecordExtension::Error)

@@ -1,1 +1,1 @@
-require 'jakewendt-simply_testable'
+require 'jakewendt-rails_extension'

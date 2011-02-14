@@ -1,5 +1,4 @@
-module SimplyTestable::ActionControllerExtension
-module Routing
+module RailsExtension::ActionControllerExtension::Routing
 
 	def self.included(base)
 		base.extend ClassMethods
@@ -19,9 +18,6 @@ module Routing
 		end
 
 	end	# module ClassMethods
-end	#	module Routing
-end	#	module SimplyTestable::ActionControllerExtension
-require 'action_controller'
-require 'action_controller/test_case'
+end	#	module RailsExtension::ActionControllerExtension::Routing
 ActionController::TestCase.send(:include, 
-	SimplyTestable::ActionControllerExtension::Routing)
+	RailsExtension::ActionControllerExtension::Routing)

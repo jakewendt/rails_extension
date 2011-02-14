@@ -1,4 +1,0 @@
-module SimplyTestable::ActionControllerExtension
-module AccessibleViaFormat
-end
-end

@@ -1,4 +1,4 @@
-module SimplyTestable::ActiveRecordExtension::Base
+module RailsExtension::ActiveRecordExtension::Base
 	def self.included(base)
 		base.extend(ClassMethods)
 	end
@@ -75,4 +75,4 @@ module SimplyTestable::ActiveRecordExtension::Base
 
 end
 ActiveRecord::Base.send(:include,
-	SimplyTestable::ActiveRecordExtension::Base)
+	RailsExtension::ActiveRecordExtension::Base)

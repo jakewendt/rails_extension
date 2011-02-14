@@ -1,5 +1,4 @@
-module SimplyTestable::ActionControllerExtension
-module AccessibleViaProtocol
+module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 
 	def self.included(base)
 		base.extend ClassMethods
@@ -395,9 +394,6 @@ module AccessibleViaProtocol
 		end
 
 	end	# module ClassMethods
-end	#	module AccessibleViaProtocol
-end	#	module SimplyTestable::ActionControllerExtension
-require 'action_controller'
-require 'action_controller/test_case'
+end	#	module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 ActionController::TestCase.send(:include, 
-	SimplyTestable::ActionControllerExtension::AccessibleViaProtocol)
+	RailsExtension::ActionControllerExtension::AccessibleViaProtocol)

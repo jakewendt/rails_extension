@@ -1,4 +1,4 @@
-module SimplyTestable::ActiveSupportExtension::TestCase
+module RailsExtension::ActiveSupportExtension::TestCase
 
 	def self.included(base)
 		base.extend(ClassMethods)
@@ -196,9 +196,7 @@ module SimplyTestable::ActiveSupportExtension::TestCase
 		end
 
 	end	#	InstanceMethods
-end	#	SimplyTestable::TestCase
-#require 'active_support'
-#require 'active_support/test_case'
+end	#	RailsExtension::TestCase
 ActiveSupport::TestCase.send(:include,
-	SimplyTestable::ActiveSupportExtension::TestCase)
+	RailsExtension::ActiveSupportExtension::TestCase)
 

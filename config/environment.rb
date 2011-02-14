@@ -19,7 +19,7 @@ Rails::Initializer.run do |config|
 	config.plugin_paths = [
 		File.expand_path(File.join(File.dirname(__FILE__),'../..'))
 	]
-	config.plugins = [ :simply_testable ]
+	config.plugins = [ :rails_extension ]
 
 	config.frameworks -= [:active_resource]
 
