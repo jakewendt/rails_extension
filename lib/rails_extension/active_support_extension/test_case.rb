@@ -23,9 +23,9 @@ module RailsExtension::ActiveSupportExtension::TestCase
 #					respond_to?(:method_missing_without_create_object)
 #			end
 			class << self
-				alias_method_chain :test, :verbosity
+				alias_method_chain( :test, :verbosity )
 			end
-		end
+		end unless base.respond_to?(:test_without_verbosity)
 	end
 
 	module ClassMethods
