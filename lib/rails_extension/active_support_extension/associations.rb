@@ -3,6 +3,30 @@ module RailsExtension::ActiveSupportExtension::Associations
 	def self.included(base)
 		base.extend ClassMethods
 #		base.send(:include,InstanceMethods)
+
+		base.class_eval do 
+			class << self
+				alias_method( :assert_should_have_many, 
+					:assert_should_have_many_ ) unless 
+						self.method_defined?(:assert_should_have_many)
+				alias_method( :assert_should_have_many_associations, 
+					:assert_should_have_many_ ) unless 
+						self.method_defined?(:assert_should_have_many_associations)
+				alias_method( :assert_should_require_valid_associations,
+					:assert_requires_valid_associations ) unless
+						self.method_defined?(:assert_should_require_valid_associations)
+				alias_method( :assert_should_require_valid_association,
+					:assert_requires_valid_associations ) unless
+						self.method_defined?(:assert_should_require_valid_association)
+				alias_method( :assert_requires_valid_association,
+					:assert_requires_valid_associations ) unless
+						self.method_defined?(:assert_requires_valid_association)
+				alias_method( :assert_requires_valid,
+					:assert_requires_valid_associations ) unless
+						self.method_defined?(:assert_requires_valid)
+			end
+		end
+
 	end
 
 	module ClassMethods
@@ -10,10 +34,8 @@ module RailsExtension::ActiveSupportExtension::Associations
 		def assert_should_initially_belong_to(*associations)
 			options = associations.extract_options!
 			model = options[:model] || st_model_name
-			
 			associations.each do |assoc|
 				class_name = ( assoc = assoc.to_s ).camelize
-
 				title = "#{brand}should initially belong to #{assoc}"
 				if !options[:class_name].blank?
 					title << " ( #{options[:class_name]} )"
@@ -31,15 +53,12 @@ module RailsExtension::ActiveSupportExtension::Associations
 						assert object.send(assoc).is_a?(class_name.constantize)
 					end
 				end
-
 			end
-
 		end
 
 		def assert_should_belong_to(*associations)
 			options = associations.extract_options!
 			model = options[:model] || st_model_name
-			
 			associations.each do |assoc|
 				class_name = ( assoc = assoc.to_s ).camelize
 				title = "#{brand}should belong to #{assoc}" 
@@ -59,24 +78,19 @@ module RailsExtension::ActiveSupportExtension::Associations
 					assert object.send(assoc).is_a?(class_name.constantize
 						) unless options[:polymorphic]
 				end
-
 			end
-
 		end
 
 		def assert_should_have_one(*associations)
 			options = associations.extract_options!
 			model = options[:model] || st_model_name
-			
 #			foreign_key = if !options[:foreign_key].blank?
 #				options[:foreign_key].to_sym
 #			else
 #				"#{model.underscore}_id".to_sym
 #			end
-
 			associations.each do |assoc|
 				assoc = assoc.to_s
-
 				test "#{brand}should have one #{assoc}" do
 					object = create_object
 					assert_nil object.reload.send(assoc)
@@ -86,24 +100,19 @@ module RailsExtension::ActiveSupportExtension::Associations
 					object.send(assoc).destroy
 					assert_nil object.reload.send(assoc)
 				end
-
 			end
-
 		end
 
 		def assert_should_have_many_(*associations)
 			options = associations.extract_options!
 			model = options[:model] || st_model_name
-
 #			foreign_key = if !options[:foreign_key].blank?
 #				options[:foreign_key].to_sym
 #			else
 #				"#{model.underscore}_id".to_sym
 #			end
-
 			associations.each do |assoc|
 				class_name = ( assoc = assoc.to_s ).camelize
-
 				title = "#{brand}should have many #{assoc}"
 				if !options[:class_name].blank?
 					title << " ( #{options[:class_name]} )"
@@ -133,22 +142,14 @@ module RailsExtension::ActiveSupportExtension::Associations
 						assert_equal 2, object.reload.send("#{assoc}_count")
 					end
 				end
-
 			end
-
 		end
-		alias_method :assert_should_have_many, 
-			:assert_should_have_many_
-		alias_method :assert_should_have_many_associations, 
-			:assert_should_have_many_
 
 		def assert_should_habtm(*associations)
 			options = associations.extract_options!
 			model = options[:model] || st_model_name
-			
 			associations.each do |assoc|
 				assoc = assoc.to_s
-
 				test "#{brand}should habtm #{assoc}" do
 					object = create_object
 					assert_equal 0, object.send(assoc).length
@@ -163,9 +164,7 @@ module RailsExtension::ActiveSupportExtension::Associations
 						assert_equal 2, object.reload.send("#{assoc}_count")
 					end
 				end
-
 			end
-
 		end
 
 		def assert_requires_valid_associations(*associations)
@@ -204,14 +203,6 @@ module RailsExtension::ActiveSupportExtension::Associations
 #				end
 
 		end
-		alias_method :assert_should_require_valid_associations,
-			:assert_requires_valid_associations
-		alias_method :assert_should_require_valid_association,
-			:assert_requires_valid_associations
-		alias_method :assert_requires_valid_association,
-			:assert_requires_valid_associations
-		alias_method :assert_requires_valid,
-			:assert_requires_valid_associations
 
 	end	# ClassMethods
 
