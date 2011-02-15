@@ -26,6 +26,9 @@ module RailsExtension::ActiveSupportExtension::TestCase
 				alias_method_chain( :test, :verbosity )
 			end
 		end unless base.respond_to?(:test_without_verbosity)
+#puts base.respond_to?(:method_missing_without_create_object)
+#puts base.method_defined?(:method_missing_without_create_object)
+#	apparently medding with method_missing is also a bit of an issue
 	end
 
 	module ClassMethods

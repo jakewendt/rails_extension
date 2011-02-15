@@ -3,8 +3,7 @@ require 'test_helper'
 class BlogTest < ActiveSupport::TestCase
 
 	assert_should_require_attributes(:title)
-	assert_should_require_attribute_length(:title,
-		:minimum => 5)
+	assert_should_require_attribute_length(:title, :minimum => 5)
 	assert_should_require_unique_attributes(:title)
 #	assert_should_not_require_attributes(
 #		:description)
