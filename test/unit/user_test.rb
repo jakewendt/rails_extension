@@ -9,5 +9,7 @@ class UserTest < ActiveSupport::TestCase
 	assert_should_require_attribute_length( :zip_code, :is => 5 )
 	assert_should_have_one( :blog )	#, :foreign_key => 'owner_id'	)
 	assert_should_have_many( :posts )	#, :foreign_key => 'author_id'	)
+	assert_requires_complete_date(:birthday)
+	assert_requires_past_date(:birthday)
 
 end

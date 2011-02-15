@@ -3,12 +3,12 @@ def brand
 end
 module RailsExtension
 #	predefine namespaces
-module ActiveSupportExtension
-end
-module ActiveRecordExtension
-end
-module ActionControllerExtension
-end
+	module ActiveSupportExtension
+	end
+	module ActiveRecordExtension
+	end
+	module ActionControllerExtension
+	end
 end
 #
 #	This may require the addition of other gem requirements

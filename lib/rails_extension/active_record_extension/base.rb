@@ -21,8 +21,6 @@ module RailsExtension::ActiveRecordExtension::Base
 			send(validation_method(configuration[:on]), configuration) do |record|
 				attr_names.each do |attr_name|
 					unless record.send(attr_name).blank?
-#						record.errors.add(attr_name, configuration[:message],
-#							:type => :present )
 						record.errors.add(attr_name, 
 							ActiveRecord::Error.new(record,attr_name,:present,
 								{ :message => configuration[:message] }))
@@ -40,8 +38,6 @@ module RailsExtension::ActiveRecordExtension::Base
 				attr_names.each do |attr_name|
 					date = record.send(attr_name)
 					if !date.blank? && Time.now < date
-#						record.errors.add(attr_name, configuration[:message],
-#							:type => :not_past_date )
 						record.errors.add(attr_name, 
 							ActiveRecord::Error.new(record,attr_name,:not_past_date,
 								{ :message => configuration[:message] }))
@@ -69,8 +65,6 @@ module RailsExtension::ActiveRecordExtension::Base
 						unless date_hash.has_key?(:year) &&
 							date_hash.has_key?(:mon) &&
 							date_hash.has_key?(:mday)
-#							record.errors.add(attr_name, configuration[:message],
-#								:type => :not_complete_date )
 							record.errors.add(attr_name, 
 								ActiveRecord::Error.new(record,attr_name,:not_complete_date,
 									{ :message => configuration[:message] }))

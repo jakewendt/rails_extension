@@ -6,4 +6,7 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of :name
 	validates_presence_of   :zip_code
 	validates_length_of     :zip_code, :is => 5
+	validates_complete_date_for :birthday, :allow_nil => true
+	validates_past_date_for :birthday
+
 end

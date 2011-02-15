@@ -86,6 +86,7 @@ module RailsExtension::ActiveSupportExtension::TestCase
 #
 #
 #	What? No assert_requires_absence method???
+#	Its usually conditional so would be pretty pointless
 #
 #
 
@@ -95,12 +96,9 @@ module RailsExtension::ActiveSupportExtension::TestCase
 					#	can't assert difference of 1 as may be other errors
 					object = create_object( attr_name => Chronic.parse('yesterday'))
 					assert !object.errors.on_attr_and_type(attr_name,:not_past_date)
-#assert_no_match(/future/, object.errors.on(attr_name).to_a.join(','))
 					assert_difference( "#{model_name}.count", 0 ) do
 						object = create_object( attr_name => Chronic.parse('tomorrow'))
-#assert object.errors.on(attr_name)
 						assert object.errors.on_attr_and_type(attr_name,:not_past_date)
-#assert_match(/future/, object.errors.on(attr_name).to_a.join(','))
 					end
 				end
 			end
@@ -116,15 +114,11 @@ module RailsExtension::ActiveSupportExtension::TestCase
 #
 					assert_difference( "#{model_name}.count", 0 ) do
 						object = create_object( attr_name => "Sept 2010")
-#assert object.errors.on(attr_name)
 						assert object.errors.on_attr_and_type(attr_name,:not_complete_date)
-#assert_match(/not a complete date/, object.errors.on(attr_name).to_a.join(','))
 					end
 					assert_difference( "#{model_name}.count", 0 ) do
 						object = create_object( attr_name => "9/2010")
-#assert object.errors.on(attr_name)
 						assert object.errors.on_attr_and_type(attr_name,:not_complete_date)
-#assert_match(/not a complete date/, object.errors.on(attr_name).to_a.join(','))
 					end
 				end
 			end

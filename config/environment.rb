@@ -15,6 +15,7 @@ Rails::Initializer.run do |config|
 		:lib => 'factory_girl'
 
 	config.gem 'jakewendt-html_test'
+	config.gem 'chronic'
 
 	config.plugin_paths = [
 		File.expand_path(File.join(File.dirname(__FILE__),'../..'))
