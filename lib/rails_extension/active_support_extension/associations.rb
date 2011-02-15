@@ -3,31 +3,24 @@ module RailsExtension::ActiveSupportExtension::Associations
 	def self.included(base)
 		base.extend ClassMethods
 #		base.send(:include,InstanceMethods)
-
 		base.class_eval do 
 			class << self
-				alias_method( :assert_should_have_many, 
-					:assert_should_have_many_ ) unless 
-						self.method_defined?(:assert_should_have_many)
-				alias_method( :assert_should_have_many_associations, 
-					:assert_should_have_many_ ) unless 
-						self.method_defined?(:assert_should_have_many_associations)
-				alias_method( :assert_should_require_valid_associations,
-					:assert_requires_valid_associations ) unless
-						self.method_defined?(:assert_should_require_valid_associations)
-				alias_method( :assert_should_require_valid_association,
-					:assert_requires_valid_associations ) unless
-						self.method_defined?(:assert_should_require_valid_association)
-				alias_method( :assert_requires_valid_association,
-					:assert_requires_valid_associations ) unless
-						self.method_defined?(:assert_requires_valid_association)
-				alias_method( :assert_requires_valid,
-					:assert_requires_valid_associations ) unless
-						self.method_defined?(:assert_requires_valid)
-			end
-		end
-
-	end
+				alias_methods = {
+					:should_have_many                  => :should_have_many_,
+					:should_have_many_associations     => :should_have_many_,
+					:should_require_valid_associations => :requires_valid_associations,
+					:should_require_valid_association  => :requires_valid_associations,
+					:requires_valid_association        => :requires_valid_associations,
+					:requires_valid                    => :requires_valid_associations
+				}
+				alias_methods.each do |alias_name,method_name|
+					alias_method( "assert_#{alias_name}",
+						"assert_#{method_name}" ) unless
+							self.method_defined?("assert_#{alias_name}")
+				end # alias_methods.each
+			end # class << self
+		end # base.class_eval
+	end # def self.included
 
 	module ClassMethods
 

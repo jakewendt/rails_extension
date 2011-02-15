@@ -3,7 +3,32 @@ module RailsExtension::ActiveSupportExtension::Attributes
 	def self.included(base)
 		base.extend ClassMethods
 #		base.send(:include,InstanceMethods)
-	end
+		base.class_eval do 
+			class << self
+				alias_methods = {
+					:require_unique_attributes  => :require_unique_attribute,
+					:require_unique             => :require_unique_attribute,
+					:require_attributes_not_nil => :require_attribute_not_nil,
+					:require_not_nil            => :require_attribute_not_nil,
+					:require_attributes         => :require_attribute,
+					:require                    => :require_attribute,
+					:not_require_attributes     => :not_require_attribute,
+					:not_require                => :not_require_attribute,
+					:require_attributes_length  => :require_attribute_length,
+					:require_length             => :require_attribute_length,
+					:protect_attributes         => :protect_attribute,
+					:protect                    => :protect_attribute,
+					:not_protect_attributes     => :not_protect_attribute,
+					:not_protect                => :not_protect_attribute
+				}
+				alias_methods.each do |alias_name,method_name|
+					alias_method( "assert_should_#{alias_name}", 
+						"assert_should_#{method_name}" ) unless
+							self.method_defined?("assert_should_#{alias_name}")
+				end	#	alias_methods.each
+			end	#	class << self
+		end	#	base.class_eval
+	end	# def self.included
 
 	module ClassMethods
 
@@ -36,10 +61,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 				end
 			end
 		end
-		alias_method :assert_should_require_unique_attributes, 
-			:assert_should_require_unique_attribute
-		alias_method :assert_should_require_unique, 
-			:assert_should_require_unique_attribute
 
 		def assert_should_require_attribute_not_nil(*attributes)
 			options = attributes.extract_options!
@@ -55,10 +76,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 				end
 			end
 		end
-		alias_method :assert_should_require_attributes_not_nil,
-			:assert_should_require_attribute_not_nil
-		alias_method :assert_should_require_not_nil,
-			:assert_should_require_attribute_not_nil
 
 		def assert_should_require_attribute(*attributes)
 			options = attributes.extract_options!
@@ -75,10 +92,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 				end
 			end
 		end
-		alias_method :assert_should_require_attributes, 
-			:assert_should_require_attribute
-		alias_method :assert_should_require, 
-			:assert_should_require_attribute
 
 		def assert_should_not_require_attribute(*attributes)
 			options = attributes.extract_options!
@@ -97,10 +110,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 				end
 			end
 		end
-		alias_method :assert_should_not_require_attributes, 
-			:assert_should_not_require_attribute
-		alias_method :assert_should_not_require, 
-			:assert_should_not_require_attribute
 
 		def assert_should_require_attribute_length(*attributes)
 			options = attributes.extract_options!
@@ -180,10 +189,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 
 			end
 		end
-		alias_method :assert_should_require_attributes_length,
-			:assert_should_require_attribute_length
-		alias_method :assert_should_require_length,
-			:assert_should_require_attribute_length
 
 		def assert_should_protect_attribute(*attributes)
 			options = attributes.extract_options!
@@ -204,10 +209,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 				end
 			end
 		end
-		alias_method :assert_should_protect_attributes, 
-			:assert_should_protect_attribute
-		alias_method :assert_should_protect, 
-			:assert_should_protect_attribute
 
 		def assert_should_not_protect_attribute(*attributes)
 			options = attributes.extract_options!
@@ -226,10 +227,6 @@ module RailsExtension::ActiveSupportExtension::Attributes
 				end
 			end
 		end
-		alias_method :assert_should_not_protect_attributes, 
-			:assert_should_not_protect_attribute
-		alias_method :assert_should_not_protect, 
-			:assert_should_not_protect_attribute
 
 	end
 
