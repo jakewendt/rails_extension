@@ -32,11 +32,11 @@ begin
 
 		gem.test_files  = []
 #		gem.test_files -= FileList['test/test_helper.rb']
-		gem.add_dependency('thoughtbot-factory_girl')
+#		gem.add_dependency('thoughtbot-factory_girl')
+		gem.add_dependency('rails', '~> 2')
 		gem.add_dependency('ssl_requirement', '>= 0.1.0')
 		gem.add_dependency('jakewendt-html_test')
 		gem.add_dependency('chronic')
-
 	end
 	Jeweler::GemcutterTasks.new
 rescue LoadError
