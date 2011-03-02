@@ -176,24 +176,29 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 
 			m_key = options[:model].try(:underscore).try(:to_sym)
 
-#			test "should NOT get new without login" do
-#				get :new
-#				assert_redirected_to_login
-#			end if actions.include?(:new) || options.keys.include?(:new)
-#
-#			test "should NOT post create without login" do
-#				args = {}
-#				args = if options[:create]
-#					options[:create]
-#				else
-#					{options[:factory] => Factory.attributes_for(options[:factory])}
-#				end
-#				assert_no_difference("#{options[:model]}.count") do
-#					send(:post,:create,args)
-#				end
-#				assert_redirected_to_login
-#			end if actions.include?(:create) || options.keys.include?(:create)
-#
+			test "#{brand}AWoL should get new without login" do
+				get :new
+				assert_response :success
+				assert_template 'new'
+				assert assigns(m_key)
+				assert_nil flash[:error]
+			end if actions.include?(:new) || options.keys.include?(:new)
+
+			test "#{brand}AWoL should post create without login" do
+				args = if options[:create]
+					options[:create]
+				elsif options[:attributes_for_create]
+					{m_key => send(options[:attributes_for_create])}
+				else
+					{}
+				end
+				assert_difference("#{options[:model]}.count",1) do
+					send(:post,:create,args)
+				end
+				assert_response :redirect
+				assert_nil flash[:error]
+			end if actions.include?(:create) || options.keys.include?(:create)
+
 #			test "should NOT get edit without login" do
 #				args=[]
 #				if options[:factory]
