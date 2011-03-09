@@ -280,7 +280,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				args = options[:new]||{}
 				send(:get,:new,args)
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:new) || options.keys.include?(:new)
 
 			test "#{brand}should NOT post create #{nawil_title(options)}" do
@@ -296,7 +299,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					send(:post,:create,args)
 				end
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 			test "#{brand}should NOT get edit #{nawil_title(options)}" do
@@ -308,7 +314,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				end
 				send(:get,:edit, args)
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:edit) || options.keys.include?(:edit)
 
 			test "#{brand}should NOT put update #{nawil_title(options)}" do
@@ -324,7 +333,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				after = obj.reload.updated_at if obj
 				assert_equal before.to_s(:db), after.to_s(:db) if obj
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:update) || options.keys.include?(:update)
 
 			test "#{brand}should NOT get show #{nawil_title(options)}" do
@@ -336,7 +348,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				end
 				send(:get,:show, args)
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:show) || options.keys.include?(:show)
 
 			test "#{brand}should NOT delete destroy #{nawil_title(options)}" do
@@ -350,14 +365,20 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					send(:delete,:destroy,args)
 				end
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:destroy) || options.keys.include?(:destroy)
 
 			test "#{brand}should NOT get index #{nawil_title(options)}" do
 				login_as send(login)
 				get :index
 				assert_not_nil flash[:error]
-				assert_redirected_to nawil_redirection(options)
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 			end	#	logins.each
