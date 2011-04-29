@@ -15,7 +15,8 @@ module RailsExtension::ActiveRecordExtension::Base
 		end
 
 		def validates_absence_of(*attr_names)
-			configuration = { :on => :save }
+			configuration = { :on => :save,
+				:message => "is present and must be absent." }
 			configuration.update(attr_names.extract_options!)
 
 			send(validation_method(configuration[:on]), configuration) do |record|
