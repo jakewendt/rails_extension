@@ -250,6 +250,24 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 #				assert_redirected_to_login
 #			end if actions.include?(:index) || options.keys.include?(:index)
 
+			test "#{brand}should get index without login" do
+				get :index
+				assert_response :success
+				assert_template 'index'
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
+				assert_nil flash[:error]
+			end if actions.include?(:index) || options.keys.include?(:index)
+
+			test "#{brand}should get index without login and items" do
+				send(options[:before]) if !options[:before].blank?
+				3.times{ send(options[:method_for_create]) } if !options[:method_for_create].blank?
+				get :index
+				assert_response :success
+				assert_template 'index'
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
+				assert_nil flash[:error]
+			end if actions.include?(:index) || options.keys.include?(:index)
+
 		end
 
 		def nawil_title(options={})
