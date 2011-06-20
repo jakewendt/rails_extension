@@ -111,6 +111,9 @@ module RailsExtension::ActiveSupportExtension::Associations
 					title << " ( #{options[:class_name]} )"
 					class_name = options[:class_name].to_s
 				end
+				if !options[:as].blank?
+					title << " ( as #{options[:as]} )"
+				end
 				test title do
 					object = create_object
 					assert_equal 0, object.send(assoc).length
