@@ -117,6 +117,8 @@ module RailsExtension::ActiveSupportExtension::Associations
 					command = ["create_#{class_name.singularize.underscore}"]
 					if !options[:foreign_key].blank?
 						command.push( options[:foreign_key].to_sym => object.id )
+					elsif !options[:as].blank?
+						command.push( options[:as].to_sym => object )
 					else
 						command.push( model.underscore => object )
 					end
