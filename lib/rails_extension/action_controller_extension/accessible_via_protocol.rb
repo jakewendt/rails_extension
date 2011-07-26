@@ -31,8 +31,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				send(:get,:new,args)
 				assert_response :success
 				assert_template 'new'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:new) || options.keys.include?(:new)
 
 			test "#{brand}AWiHTTP should post create #{awihttp_title(options)}" do
@@ -49,7 +49,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 					send(:post,:create,args)
 				end
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 			test "#{brand}AWiHTTP should get edit #{awihttp_title(options)}" do
@@ -63,8 +63,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				send(:get,:edit, args)
 				assert_response :success
 				assert_template 'edit'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:edit) || options.keys.include?(:edit)
 
 			test "#{brand}AWiHTTP should put update #{awihttp_title(options)}" do
@@ -80,9 +80,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				sleep 1 if obj  # if updated too quickly, updated_at won't change
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
-				assert_not_equal before.to_i,after.to_i if obj
+				assert_not_equal( before.to_i,after.to_i, "updated_at did not change" ) if obj
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:update) || options.keys.include?(:update)
 
 			test "#{brand}AWiHTTP should get show #{awihttp_title(options)}" do
@@ -96,8 +96,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				send(:get,:show, args)
 				assert_response :success
 				assert_template 'show'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:show) || options.keys.include?(:show)
 
 			test "#{brand}AWiHTTP should delete destroy #{awihttp_title(options)}" do
@@ -112,8 +112,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 					send(:delete,:destroy,args)
 				end
 				assert_response :redirect
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:destroy) || options.keys.include?(:destroy)
 
 			test "#{brand}AWiHTTP should get index #{awihttp_title(options)}" do
@@ -122,8 +122,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)), 
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 			test "#{brand}AWiHTTP should get index #{awihttp_title(options)} and items" do
@@ -134,8 +135,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)),
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 		end
@@ -165,8 +167,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				send(:get,:new,args)
 				assert_response :success
 				assert_template 'new'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:new) || options.keys.include?(:new)
 
 			test "#{brand}AWiHTTPS should post create #{awihttps_title(options)}" do
@@ -183,7 +185,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 					send(:post,:create,args)
 				end
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 			test "#{brand}AWiHTTPS should get edit #{awihttps_title(options)}" do
@@ -197,8 +199,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				send(:get,:edit, args)
 				assert_response :success
 				assert_template 'edit'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:edit) || options.keys.include?(:edit)
 
 			test "#{brand}AWiHTTPS should put update #{awihttps_title(options)}" do
@@ -214,9 +216,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				turn_https_on
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
-				assert_not_equal before.to_i,after.to_i if obj
+				assert_not_equal( before.to_i,after.to_i, "updated_at did not change" ) if obj
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:update) || options.keys.include?(:update)
 
 			test "#{brand}AWiHTTPS should get show #{awihttps_title(options)}" do
@@ -230,8 +232,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				send(:get,:show, args)
 				assert_response :success
 				assert_template 'show'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:show) || options.keys.include?(:show)
 
 			test "#{brand}AWiHTTPS should delete destroy #{awihttps_title(options)}" do
@@ -246,8 +248,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 					send(:delete,:destroy,args)
 				end
 				assert_response :redirect
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:destroy) || options.keys.include?(:destroy)
 
 			test "#{brand}AWiHTTPS should get index #{awihttps_title(options)}" do
@@ -256,8 +258,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)),
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 			test "#{brand}AWiHTTPS should get index #{awihttps_title(options)} and items" do
@@ -268,8 +271,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)),
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned"
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 		end
@@ -346,7 +350,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
 				before = obj.updated_at if obj
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
-				assert_equal before.to_s(:db), after.to_s(:db) if obj
+				assert_equal( before.to_s(:db), after.to_s(:db), "updated_at changed" ) if obj
 				assert_match @controller.url_for(
 					:controller => @controller.controller_name,
 					:action => 'update', :id => args[:id], :protocol => "https://"), @response.redirected_to

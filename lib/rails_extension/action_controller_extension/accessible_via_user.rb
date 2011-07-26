@@ -58,8 +58,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				send(:get,:new,args)
 				assert_response :success
 				assert_template 'new'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:new) || options.keys.include?(:new)
 
 			test "#{brand}should post create #{awil_title(options)}" do
@@ -75,7 +75,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					send(:post,:create,args)
 				end
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 			test "#{brand}should get edit #{awil_title(options)}" do
@@ -88,8 +88,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				send(:get,:edit, args)
 				assert_response :success
 				assert_template 'edit'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:edit) || options.keys.include?(:edit)
 
 			test "#{brand}should put update #{awil_title(options)}" do
@@ -104,9 +104,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				sleep 1 if obj	#	if updated too quickly, updated_at won't change
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
-				assert_not_equal before.to_i,after.to_i if obj
+				assert_not_equal( before.to_i,after.to_i, "updated_at did not change." ) if obj
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:update) || options.keys.include?(:update)
 
 			test "#{brand}should get show #{awil_title(options)}" do
@@ -119,8 +119,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				send(:get,:show, args)
 				assert_response :success
 				assert_template 'show'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:show) || options.keys.include?(:show)
 
 			test "#{brand}should delete destroy #{awil_title(options)}" do
@@ -134,8 +134,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					send(:delete,:destroy,args)
 				end
 				assert_response :redirect
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:destroy) || options.keys.include?(:destroy)
 
 			test "#{brand}should get index #{awil_title(options)}" do
@@ -143,8 +143,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)), 
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 			test "#{brand}should get index #{awil_title(options)} and items" do
@@ -154,8 +155,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)),
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 			end	#	logins.each
@@ -180,8 +182,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				get :new
 				assert_response :success
 				assert_template 'new'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:new) || options.keys.include?(:new)
 
 			test "#{brand}AWoL should post create without login" do
@@ -196,7 +198,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					send(:post,:create,args)
 				end
 				assert_response :redirect
-				assert_nil flash[:error]
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 #			test "should NOT get edit without login" do
@@ -229,8 +231,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				send(:get,:show, args)
 				assert_response :success
 				assert_template 'show'
-				assert assigns(m_key)
-				assert_nil flash[:error]
+				assert assigns(m_key), "#{m_key} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:show) || options.keys.include?(:show)
 
 #			test "should NOT delete destroy without login" do
@@ -254,8 +256,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)),
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 			test "#{brand}should get index without login and items" do
@@ -264,8 +267,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				get :index
 				assert_response :success
 				assert_template 'index'
-				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym))
-				assert_nil flash[:error]
+				assert assigns(m_key.try(:to_s).try(:pluralize).try(:to_sym)),
+					"#{m_key.try(:to_s).try(:pluralize).try(:to_sym)} was not assigned."
+				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:index) || options.keys.include?(:index)
 
 		end
@@ -297,7 +301,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				login_as send(login)
 				args = options[:new]||{}
 				send(:get,:new,args)
-				assert_not_nil flash[:error]
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -316,7 +320,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_no_difference("#{options[:model]}.count") do
 					send(:post,:create,args)
 				end
-				assert_not_nil flash[:error]
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -331,7 +335,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					args[:id] = obj.id
 				end
 				send(:get,:edit, args)
-				assert_not_nil flash[:error]
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -349,8 +353,8 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				before = obj.updated_at if obj
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
-				assert_equal before.to_s(:db), after.to_s(:db) if obj
-				assert_not_nil flash[:error]
+				assert_equal( before.to_s(:db), after.to_s(:db), "updated_at changed." ) if obj
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -365,7 +369,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 					args[:id] = obj.id
 				end
 				send(:get,:show, args)
-				assert_not_nil flash[:error]
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -382,7 +386,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_no_difference("#{options[:model]}.count") do
 					send(:delete,:destroy,args)
 				end
-				assert_not_nil flash[:error]
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -392,7 +396,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 			test "#{brand}should NOT get index #{nawil_title(options)}" do
 				login_as send(login)
 				get :index
-				assert_not_nil flash[:error]
+				assert_not_nil flash[:error], "flash[:error] was nil"
 				assert_response :redirect
 				unless options[:no_redirect_check]
 					assert_redirected_to nawil_redirection(options)
@@ -453,7 +457,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				before = obj.updated_at if obj
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
-				assert_equal before.to_s(:db), after.to_s(:db) if obj
+				assert_equal( before.to_s(:db), after.to_s(:db) ) if obj
 				assert_redirected_to_login
 			end if actions.include?(:update) || options.keys.include?(:update)
 
