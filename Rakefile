@@ -27,6 +27,7 @@ begin
 		# gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 
 		gem.files  = FileList['lib/**/*.rb']
+		gem.files += FileList['rails/init.rb']
 		gem.files += FileList['generators/**/*']
 		gem.files -= FileList['**/versions/*']
 
