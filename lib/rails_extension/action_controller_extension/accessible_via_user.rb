@@ -79,8 +79,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 			test "#{brand}should NOT post create #{awil_title(options)} and #{m_key} save fails" do
-				options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
 				login_as send(login)
+				#	AFTER login as it may create this resource with the user
+				options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
 				args = if options[:create]
 					options[:create]
 				elsif options[:attributes_for_create]
@@ -98,8 +99,9 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 			end if actions.include?(:create) || options.keys.include?(:create)
 
 			test "#{brand}should NOT post create #{awil_title(options)} and invalid #{m_key}" do
-				options[:model].constantize.any_instance.stubs(:valid?).returns(false)
 				login_as send(login)
+				#	AFTER login as it may create this resource with the user
+				options[:model].constantize.any_instance.stubs(:valid?).returns(false)
 				args = if options[:create]
 					options[:create]
 				elsif options[:attributes_for_create]
