@@ -78,9 +78,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:create) || options.keys.include?(:create)
 
-
-
-			test "#{brand}should post create #{awil_title(options)} and #{m_key} save fails" do
+			test "#{brand}should NOT post create #{awil_title(options)} and #{m_key} save fails" do
 				options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
 				login_as send(cu)
 				args = if options[:create]
@@ -118,9 +116,6 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_not_nil flash[:error]
 			end if actions.include?(:create) || options.keys.include?(:create)
 
-
-
-
 			test "#{brand}should get edit #{awil_title(options)}" do
 				login_as send(login)
 				args={}
@@ -135,7 +130,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:edit) || options.keys.include?(:edit)
 
-			test "#{brand}should NOT get edit #{awil_title(options)} and invalid id" do
+			test "#{brand}should NOT get edit #{awil_title(options)} and an invalid id" do
 				login_as send(login)
 				get :edit, :id => 0
 				assert_not_nil flash[:error], "flash[:error] was nil"
@@ -203,7 +198,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				end
 			end if actions.include?(:update) || options.keys.include?(:update)
 
-			test "#{brand}should NOT put update #{awil_title(options)} and invalid id" do
+			test "#{brand}should NOT put update #{awil_title(options)} and an invalid id" do
 				login_as send(login)
 				put :update, :id => 0
 				assert_not_nil flash[:error], "flash[:error] was nil"
@@ -228,7 +223,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:show) || options.keys.include?(:show)
 
-			test "#{brand}should NOT get show #{awil_title(options)} and invalid id" do
+			test "#{brand}should NOT get show #{awil_title(options)} and an invalid id" do
 				login_as send(login)
 				get :show, :id => 0
 				assert_not_nil flash[:error], "flash[:error] was nil"
@@ -254,7 +249,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:destroy) || options.keys.include?(:destroy)
 
-			test "#{brand}should NOT delete destroy #{awil_title(options)} and invalid id" do
+			test "#{brand}should NOT delete destroy #{awil_title(options)} and an invalid id" do
 				login_as send(login)
 				delete :destroy, :id => 0
 				assert_not_nil flash[:error], "flash[:error] was nil"
