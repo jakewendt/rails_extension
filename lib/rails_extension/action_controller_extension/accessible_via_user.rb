@@ -174,12 +174,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				after = obj.reload.updated_at if obj
 				assert_equal( before.to_s(:db), after.to_s(:db), "updated_at changed." ) if obj
 				assert_not_nil flash[:error], "flash[:error] was nil"
-				assert_response :success
-				assert_template 'edit'
-#				assert_response :redirect
-#				unless options[:no_redirect_check]
-#					assert_redirected_to nawil_redirection(options)
-#				end
+				unless options[:no_redirect_check]
+					assert_response :success
+					assert_template 'edit'
+				end
 			end if actions.include?(:update) || options.keys.include?(:update)
 
 			test "#{brand}should NOT put update #{awil_title(options)} and invalid #{m_key}" do
@@ -196,12 +194,10 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				after = obj.reload.updated_at if obj
 				assert_equal( before.to_s(:db), after.to_s(:db), "updated_at changed." ) if obj
 				assert_not_nil flash[:error], "flash[:error] was nil"
-				assert_response :success
-				assert_template 'edit'
-#				assert_response :redirect
-#				unless options[:no_redirect_check]
-#					assert_redirected_to nawil_redirection(options)
-#				end
+				unless options[:no_redirect_check]
+					assert_response :success
+					assert_template 'edit'
+				end
 			end if actions.include?(:update) || options.keys.include?(:update)
 
 			test "#{brand}should NOT put update #{awil_title(options)} and an invalid id" do
