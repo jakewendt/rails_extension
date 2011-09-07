@@ -80,7 +80,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 
 			test "#{brand}should NOT post create #{awil_title(options)} and #{m_key} save fails" do
 				options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
-				login_as send(cu)
+				login_as send(login)
 				args = if options[:create]
 					options[:create]
 				elsif options[:attributes_for_create]
@@ -99,7 +99,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 
 			test "#{brand}should NOT post create #{awil_title(options)} and invalid #{m_key}" do
 				options[:model].constantize.any_instance.stubs(:valid?).returns(false)
-				login_as send(cu)
+				login_as send(login)
 				args = if options[:create]
 					options[:create]
 				elsif options[:attributes_for_create]
@@ -223,16 +223,17 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:show) || options.keys.include?(:show)
 
-			test "#{brand}should NOT get show #{awil_title(options)} and an invalid id" do
-				login_as send(login)
-				get :show, :id => 0
-				assert_not_nil flash[:error], "flash[:error] was nil"
-				assert_response :redirect
-
-
-
-
-			end if actions.include?(:show) || options.keys.include?(:show)
+#
+#	TODO
+#		Not all show actions use the :id so this doesn't always go as planned.
+#		(calendar, ....)
+#
+#			test "#{brand}should NOT get show #{awil_title(options)} and an invalid id" do
+#				login_as send(login)
+#				get :show, :id => 0
+#				assert_not_nil flash[:error], "flash[:error] was nil"
+#				assert_response :redirect
+#			end if actions.include?(:show) || options.keys.include?(:show)
 
 			test "#{brand}should delete destroy #{awil_title(options)}" do
 				login_as send(login)
