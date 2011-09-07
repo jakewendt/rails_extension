@@ -78,6 +78,49 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:create) || options.keys.include?(:create)
 
+
+
+			test "#{brand}should post create #{awil_title(options)} and #{m_key} save fails" do
+				options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
+				login_as send(cu)
+				args = if options[:create]
+					options[:create]
+				elsif options[:attributes_for_create]
+					{m_key => send(options[:attributes_for_create])}
+				else
+					{}
+				end
+				assert_difference("#{options[:model]}.count",0) do
+					send(:post,:create,args)
+				end
+				assert assigns(m_key)
+				assert_response :success
+				assert_template 'new'
+				assert_not_nil flash[:error]
+			end if actions.include?(:create) || options.keys.include?(:create)
+
+			test "#{brand}should NOT post create #{awil_title(options)} and invalid #{m_key}" do
+				options[:model].constantize.any_instance.stubs(:valid?).returns(false)
+				login_as send(cu)
+				args = if options[:create]
+					options[:create]
+				elsif options[:attributes_for_create]
+					{m_key => send(options[:attributes_for_create])}
+				else
+					{}
+				end
+				assert_difference("#{options[:model]}.count",0) do
+					send(:post,:create,args)
+				end
+				assert assigns(m_key)
+				assert_response :success
+				assert_template 'new'
+				assert_not_nil flash[:error]
+			end if actions.include?(:create) || options.keys.include?(:create)
+
+
+
+
 			test "#{brand}should get edit #{awil_title(options)}" do
 				login_as send(login)
 				args={}
@@ -90,6 +133,17 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_template 'edit'
 				assert assigns(m_key), "#{m_key} was not assigned."
 				assert_nil flash[:error], "flash[:error] was not nil"
+			end if actions.include?(:edit) || options.keys.include?(:edit)
+
+			test "#{brand}should NOT get edit #{awil_title(options)} and invalid id" do
+				login_as send(login)
+				get :edit, :id => 0
+				assert_not_nil flash[:error], "flash[:error] was nil"
+				assert_response :redirect
+
+
+
+
 			end if actions.include?(:edit) || options.keys.include?(:edit)
 
 			test "#{brand}should put update #{awil_title(options)}" do
@@ -109,6 +163,57 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_nil flash[:error], "flash[:error] was not nil"
 			end if actions.include?(:update) || options.keys.include?(:update)
 
+			test "#{brand}should NOT put update #{awil_title(options)} and #{m_key} save fails" do
+				login_as send(login)
+				args=options[:update]||{}
+				if options[:method_for_create] && options[:attributes_for_create]
+					obj = send(options[:method_for_create])
+					args[:id] = obj.id
+					args[m_key] = send(options[:attributes_for_create])
+				end
+				before = obj.updated_at if obj
+				options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
+				send(:put,:update, args)
+				after = obj.reload.updated_at if obj
+				assert_equal( before.to_s(:db), after.to_s(:db), "updated_at changed." ) if obj
+				assert_not_nil flash[:error], "flash[:error] was nil"
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
+			end if actions.include?(:update) || options.keys.include?(:update)
+
+			test "#{brand}should NOT put update #{awil_title(options)} and invalid #{m_key}" do
+				login_as send(login)
+				args=options[:update]||{}
+				if options[:method_for_create] && options[:attributes_for_create]
+					obj = send(options[:method_for_create])
+					args[:id] = obj.id
+					args[m_key] = send(options[:attributes_for_create])
+				end
+				before = obj.updated_at if obj
+				options[:model].constantize.any_instance.stubs(:valid?).returns(false)
+				send(:put,:update, args)
+				after = obj.reload.updated_at if obj
+				assert_equal( before.to_s(:db), after.to_s(:db), "updated_at changed." ) if obj
+				assert_not_nil flash[:error], "flash[:error] was nil"
+				assert_response :redirect
+				unless options[:no_redirect_check]
+					assert_redirected_to nawil_redirection(options)
+				end
+			end if actions.include?(:update) || options.keys.include?(:update)
+
+			test "#{brand}should NOT put update #{awil_title(options)} and invalid id" do
+				login_as send(login)
+				put :update, :id => 0
+				assert_not_nil flash[:error], "flash[:error] was nil"
+				assert_response :redirect
+
+
+
+
+			end if actions.include?(:update) || options.keys.include?(:update)
+
 			test "#{brand}should get show #{awil_title(options)}" do
 				login_as send(login)
 				args={}
@@ -121,6 +226,17 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_template 'show'
 				assert assigns(m_key), "#{m_key} was not assigned."
 				assert_nil flash[:error], "flash[:error] was not nil"
+			end if actions.include?(:show) || options.keys.include?(:show)
+
+			test "#{brand}should NOT get show #{awil_title(options)} and invalid id" do
+				login_as send(login)
+				get :show, :id => 0
+				assert_not_nil flash[:error], "flash[:error] was nil"
+				assert_response :redirect
+
+
+
+
 			end if actions.include?(:show) || options.keys.include?(:show)
 
 			test "#{brand}should delete destroy #{awil_title(options)}" do
@@ -136,6 +252,17 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 				assert_response :redirect
 				assert assigns(m_key), "#{m_key} was not assigned."
 				assert_nil flash[:error], "flash[:error] was not nil"
+			end if actions.include?(:destroy) || options.keys.include?(:destroy)
+
+			test "#{brand}should NOT delete destroy #{awil_title(options)} and invalid id" do
+				login_as send(login)
+				delete :destroy, :id => 0
+				assert_not_nil flash[:error], "flash[:error] was nil"
+				assert_response :redirect
+
+
+
+
 			end if actions.include?(:destroy) || options.keys.include?(:destroy)
 
 			test "#{brand}should get index #{awil_title(options)}" do
