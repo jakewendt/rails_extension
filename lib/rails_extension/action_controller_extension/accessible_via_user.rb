@@ -165,6 +165,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 						args[m_key] = send(options[:attributes_for_create])
 					end
 					before = obj.updated_at if obj
+					sleep 1 if obj	#	if updated too quickly, updated_at won't change
 					options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
 					send(:put,:update, args)
 					after = obj.reload.updated_at if obj
@@ -185,6 +186,7 @@ module RailsExtension::ActionControllerExtension::AccessibleViaUser
 						args[m_key] = send(options[:attributes_for_create])
 					end
 					before = obj.updated_at if obj
+					sleep 1 if obj	#	if updated too quickly, updated_at won't change
 					options[:model].constantize.any_instance.stubs(:valid?).returns(false)
 					send(:put,:update, args)
 					after = obj.reload.updated_at if obj
